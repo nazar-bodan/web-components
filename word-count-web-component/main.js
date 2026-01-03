@@ -14,20 +14,29 @@ class WordCount extends HTMLParagraphElement {
 
 	connectedCallback() {
 		// Count words in element's parent node
-		const wcParent = this.parentNode;
+		this.wcParent = this.parentNode;
 
 		function countWords(node) {
 			const text = node.innerText || node.textContent;
 			return text.split(/\s+/g).filter((a) => a.trim().length > 0).length;
 		}
 
-		const count = `Words: ${countWords(wcParent)}`;
+		const count = `Words: ${countWords(this.wcParent)}`;
 		this.text.textContent = count;
 
+		// Store the listener so it can be removed
+		this.onInput = () => {
+			this.text.textContent = `Words: ${countWords(this.wcParent)}`;
+		};
+
 		// Update word count on input
-		wcParent.addEventListener("input", () => {
-			this.text.textContent = `Words: ${countWords(wcParent)}`;
-		});
+		this.wcParent.addEventListener("input", this.onInput);
+	}
+
+	disconnectedCallback() {
+		if (this.wcParent) {
+			this.wcParent.removeEventListener("input", this.onInput);
+		}
 	}
 }
 
