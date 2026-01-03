@@ -16,16 +16,18 @@ class WordCount extends HTMLParagraphElement {
 		// Count words in element's parent node
 		this.wcParent = this.parentNode;
 
-		const count = `Words: ${this.countWords(this.wcParent)}`;
-		this.text.textContent = count;
+		if (this.wcParent) {
+			const count = `Words: ${this.countWords(this.wcParent)}`;
+			this.text.textContent = count;
 
-		// Store the listener so it can be removed
-		this.onInput = () => {
-			this.text.textContent = `Words: ${this.countWords(this.wcParent)}`;
-		};
+			// Store the listener so it can be removed
+			this.onInput = () => {
+				this.text.textContent = `Words: ${this.countWords(this.wcParent)}`;
+			};
 
-		// Update word count on input
-		this.wcParent.addEventListener("input", this.onInput);
+			// Update word count on input
+			this.wcParent.addEventListener("input", this.onInput);
+		}
 	}
 
 	disconnectedCallback() {
