@@ -3,13 +3,13 @@ class WordCount extends HTMLParagraphElement {
 		super();
 
 		// Attach shadow DOM to element
-		const shadow = this.attachShadow({ mode: "open" });
+		this.attachShadow({ mode: "open" });
 
 		// Create text element and add word count to it
 		this.text = document.createElement("span");
 
 		// Append it to shadow DOM
-		shadow.appendChild(this.text);
+		this.shadowRoot.appendChild(this.text);
 	}
 
 	connectedCallback() {
