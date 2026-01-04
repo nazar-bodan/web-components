@@ -36,7 +36,8 @@ class Square extends HTMLElement {
 		console.log("Custom square element moved to new page");
 	}
 
-	attributeChangedCallback() {
+	attributeChangedCallback(_name, oldValue, newValue) {
+		if (oldValue === newValue) return;
 		console.log("Custom square element attributes changed");
 		updateStyle(this);
 	}
