@@ -11,6 +11,13 @@ class Square extends HTMLElement {
 
 		const div = document.createElement("div");
 		const style = document.createElement("style");
+		style.textContent = `
+      div {
+        width: var(--size);
+        height: var(--size);
+        background-color: var(--color);
+      }
+    `;
 
 		shadow.appendChild(div);
 		shadow.appendChild(style);
@@ -39,13 +46,10 @@ customElements.define("custom-square", Square);
 
 function updateStyle(element) {
 	const shadow = element.shadowRoot;
-	shadow.querySelector("style").textContent = `
-    div {
-      width: ${element.getAttribute("size")}px;
-      height: ${element.getAttribute("size")}px;
-      background-color: ${element.getAttribute("color")};
-    }
-  `;
+	const div = shadow.querySelector("div");
+
+	div.style.setProperty("--size", `${element.getAttribute("size")}px`);
+	div.style.setProperty("--color", element.getAttribute("color"));
 }
 
 const add = document.querySelector(".add");
