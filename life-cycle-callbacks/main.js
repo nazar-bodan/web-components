@@ -25,7 +25,7 @@ class Square extends HTMLElement {
 
 	connectedCallback() {
 		console.log("Custom square element added to page.");
-		updateStyle(this);
+		this.updateStyle();
 	}
 
 	disconnectedCallback() {
@@ -39,22 +39,21 @@ class Square extends HTMLElement {
 	attributeChangedCallback(_name, oldValue, newValue) {
 		if (oldValue === newValue) return;
 		console.log("Custom square element attributes changed");
-		updateStyle(this);
+		this.updateStyle();
+	}
+
+	updateStyle() {
+		const div = this.shadowRoot.querySelector("div");
+
+		const size = this.getAttribute("size") || "100";
+		const color = this.getAttribute("color") || "red";
+
+		div.style.setProperty("--size", `${size}px`);
+		div.style.setProperty("--color", color);
 	}
 }
 
 customElements.define("custom-square", Square);
-
-function updateStyle(element) {
-	const shadow = element.shadowRoot;
-	const div = shadow.querySelector("div");
-
-	const size = element.getAttribute("size") || "100";
-	const color = element.getAttribute("color") || "red";
-
-	div.style.setProperty("--size", `${size}px`);
-	div.style.setProperty("--color", color);
-}
 
 const add = document.querySelector(".add");
 const update = document.querySelector(".update");
