@@ -49,8 +49,11 @@ function updateStyle(element) {
 	const shadow = element.shadowRoot;
 	const div = shadow.querySelector("div");
 
-	div.style.setProperty("--size", `${element.getAttribute("size")}px`);
-	div.style.setProperty("--color", element.getAttribute("color"));
+	const size = element.getAttribute("size") || "100";
+	const color = element.getAttribute("color") || "red";
+
+	div.style.setProperty("--size", `${size}px`);
+	div.style.setProperty("--color", color);
 }
 
 const add = document.querySelector(".add");
